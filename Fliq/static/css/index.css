@@ -189,18 +189,18 @@ header .navbar-nav .nav-link.active {
     white-space: nowrap;
 }
 #cart table img{
-    width: 60%;
+    width: 80%;
 }
 #cart table td:nth-child(1){
     width:100px;
     text-align:center;
 }
 #cart table td:nth-child(2){
-    width:150px;
+    width:100px;
     text-align:center;
 }
 #cart table td:nth-child(3){
-    width:250px;
+    width:200px;
     text-align:center;
 }
 #cart table td:nth-child(4),
@@ -263,3 +263,15 @@ th:last-child {
     color:white;
     border-radius: 50px;
 }
+/* .update-btn{
+    display:flex;
+    flex-direction: column;
+    text-decoration: none;
+    padding: 5px 8px;
+    font-size:1 rem;
+    position: relative;
+    margin: 5px;
+    background-color:#072227;
+    color:white;
+    border-radius: 5px;
+} */

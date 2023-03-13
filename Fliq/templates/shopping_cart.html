@@ -1,0 +1,79 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <h2>Cart</h2>
+
+    {% if cart_items %}
+        <div class="col-sm-8">
+        <section class="left-col" id="cart">
+            <table>
+                <thead>
+                    <tr>
+                        <td>   </td>
+                        <td>Image</td>
+                        <td>Product</td>
+                        <td>Price</td>
+                        <td>Quantity</td>
+                        <td>Total</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cart_item in cart_items %}
+                    <tr>
+                        <td>
+                            <a href="{% url 'remove_from_cart' cart_item.id %}"><i class="fa-solid fa-trash-can" style="color:#072227;"></i></a>
+                        </td>
+                        <td><img src="{{  cart_item.product.image.url }}" alt=""></td>
+                        <td>{{ cart_item.product.name }}</td>
+                        <td>Ksh.{{ cart_item.product.price }}</td>
+                        <td>
+                            <form method="POST" action="{% url 'update_cart' %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="cart_item" value="{{ cart_item.id }}">
+                                <input type="number" name="quantity" value="{{ cart_item.quantity }}" min="1">
+                                <button type="submit">Update</button>
+                            </form>
+                        </td>
+                        <td>Ksh.{{ cart_item.get_total_cost }} </td> 
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <br>
+            <br>
+        </section>
+
+        </div>
+        <div class="col-sm-4">
+            <section class="right-col">
+                <div class="total-price">
+                    <table>
+                        <tr>
+                            <td><strong>Subtotal</strong></td>
+                            <td>Ksh.{{ subtotal }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>VAT</strong></td>
+                            <td>{{ tax }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Total</strong></td>
+                            <td>{{ total }}</td>
+                        </tr>
+                    </table>
+                </div>
+                <a href="#" class="btn checkout-btn">Checkout</a>
+    {% else %}
+    <p>Your cart is empty.</p>
+    {% endif %}
+            </section>
+        </div>
+    </div>
+</div>
+    
+{% endblock content %}
+
+
