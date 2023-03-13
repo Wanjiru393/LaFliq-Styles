@@ -1,0 +1,26 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+  <h1>{{ product.name }}</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="product-box">
+                <div class="product-inner-box position-relative">
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid">
+                </div>
+                <div class="product-name">
+                    <h4>{{ product.name }}</h4>
+                </div>
+                <p>{{ product.description }}</p>
+                <p>Ksh.{{ product.price }}</p>
+                <p>Category: {{ product.category }}</p>
+                <div class="product-price"> 
+                    <p class="product-stock">{% if product.stock > 0 %}In stock{% else %}Out of stock{% endif %}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

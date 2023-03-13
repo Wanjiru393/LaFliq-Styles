@@ -3,10 +3,18 @@
 
 {% block content %}
     <div class="container">
-        <!-- search by category -->
-       
-       
-        <!-- end search by category -->
+        <!-- filter by category -->
+        <form method="get">
+            <select name="category">
+                <option value="">All categories</option>
+                {% for category in categories %}
+                    <option value="{{ category.slug }}" {% if current_category == category.slug %}selected{% endif %}>{{ category.name }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Filter</button>
+        </form>
+        <br>
+        <!-- end filter by category -->
 
         <div class="row">
             {% for product in products %}
@@ -15,7 +23,6 @@
                 <div class="product-box">
                     <div class="product-inner-box position-relative">
                             <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid">
-
                     </div>
                     <div class="product-info">
                         <div class="product-name">
@@ -24,7 +31,7 @@
 
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
-                                <a href="#" class="btn btn-sm btn-outline-secondary">View</a>
+                                <a href="{% url 'product_detail' product.id %}" class="btn btn-sm btn-outline-secondary">View</a>
                                 <a href="#" class="btn btn-sm btn-outline-secondary"><i class="fa fa-shopping-cart" aria-hidden="true"></i>Add to cart</a>
                             </div>
                             <small class="text-muted">Ksh.{{ product.price }}</small>
@@ -32,7 +39,6 @@
                         <br>
                         <div class="product-price"> 
                             <p class="product-stock">{% if product.stock > 0 %}In stock{% else %}Out of stock{% endif %}</p>
-
                         </div>
 
                     </div>

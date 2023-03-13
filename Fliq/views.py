@@ -38,8 +38,25 @@ from django.db.models import Subquery, OuterRef, Sum
 
 
 def product_list(request):
-    products = Product.objects.all()
+    category_slug = request.GET.get('category')
+    if category_slug:
+        category = get_object_or_404(Category, slug=category_slug)
+        products = Product.objects.filter(category=category)
+    else:
+        products = Product.objects.all()
+
+    categories = Category.objects.all()
     context = {
         'products': products,
+        'categories': categories,
+        'current_category': category_slug,
     }
     return render(request, 'home.html', context)
+
+def product_detail(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    context = {
+        'product': product,
+    }
+    return render(request, 'product_detail.html', context)
+
