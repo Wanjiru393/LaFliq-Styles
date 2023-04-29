@@ -65,7 +65,7 @@
                         </tr>
                     </table>
                 </div>
-                <a href="#" class="btn checkout-btn">Checkout</a>
+                <a href="{% url 'checkout' %}" class="btn checkout-btn">Checkout</a>
     {% else %}
     <p>Your cart is empty.</p>
     {% endif %}

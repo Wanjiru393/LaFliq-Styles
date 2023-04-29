@@ -1,0 +1,11 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+<h1>Payment Confirmation</h1>
+{% if transaction_code %}
+<p>Your payment was successful. Your transaction code is: {{ transaction_code }}</p>
+{% else %}
+<p>There was an error processing your payment. Please try again.</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'index.html' %}
+
+{% block content %}
+  <div class="container my-4">
+    <div class="row">
+      <div class="col-md-8">
+        <h2 class="mb-4">Checkout</h2>
+        <form method="post" action="{% url 'checkout' %}">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="phone_number">Phone Number</label>
+            <input type="tel" name="phone_number" id="phone_number" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label for="payment_method">Payment Method</label>
+            <select name="payment_method" id="payment_method" class="form-control" required>
+              <option value="">-- Select Payment Method --</option>
+              <option value="mpesa">M-PESA</option>
+              <option value="credit_card">Credit Card</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="address">Address</label>
+            <textarea name="address" id="address" class="form-control" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Checkout</button>
+        </form>
+      </div>
+      <div class="col-md-4">
+        <h4 class="mb-4">Order Summary</h4>
+        {% if cart_items %}
+          <ul class="list-group mb-4">
+            {% for cart_item in cart_items %}
+              <li class="list-group-item">{{ cart_item.quantity }} {{ cart_item.product.name }}  <span class="float-right"> -   Ksh.{{ cart_item.get_total_cost }}</span></li>
+            {% endfor %}
+            <li class="list-group-item"><strong>Subtotal </strong><span class="float-right">Ksh.{{ subtotal }}</span></li>
+            <li class="list-group-item"><strong>Tax (2.5%) </strong><span class="float-right">Ksh.{{ tax }}</span></li>
+            <li class="list-group-item"><strong>Total </strong><span class="float-right">Ksh.{{ total }}</span></li>
+          </ul>
+        {% else %}
+          <p class="text-muted">Your cart is empty</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endblock %}
