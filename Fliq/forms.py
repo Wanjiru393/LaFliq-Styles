@@ -13,7 +13,7 @@ class UserRegistrationForm(UserCreationForm):
         fields = ['username', 'email', 'password1', 'password2']
 
 class CheckoutForm(forms.Form):
-    email = forms.EmailField(required=True)
+    #email = forms.EmailField(required=True)
     phone_number = forms.CharField(required=True)
     address = forms.CharField(required=True)
 
