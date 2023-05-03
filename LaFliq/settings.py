@@ -13,8 +13,9 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 import os
 import environ
+from environ import Env
 
-env = environ.Env(DEBUG=(bool, False))
+env = Env(DEBUG=(bool, False))
 environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
