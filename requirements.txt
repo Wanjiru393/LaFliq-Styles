@@ -1,4 +1,4 @@
-apturl==0.5.2
+apturl
 bcrypt==3.2.0
 beautifulsoup4==4.10.0
 blinker==1.4
