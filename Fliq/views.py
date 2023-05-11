@@ -146,57 +146,7 @@ def update_cart(request):
         messages.success(request, 'Cart updated.')
         return redirect('cart_view')
 
-#MPESA CONFIGURATION
 
-# def get_mpesa_access_token():
-#     """
-#     Generates an access token for the M-PESA API.
-#     """
-#     consumer_key = "lDLhStEVuLEENYpvR19yHJm3gUNs2Vzt"
-#     consumer_secret = "CAlXI3Z0gFxpiLpQ"
-#     access_token_url = "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials"
-
-#     # api_key = base64.b64encode(f"{consumer_key}:{consumer_secret}".encode()).decode()
-
-#     # # Make a request to the authentication endpoint to generate the access token
-#     # response = requests.get(
-#     #     "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials",
-#     #     auth=HTTPBasicAuth(consumer_key, consumer_secret)
-#     # )
-
-#     # if response.status_code == 200:
-#     #     return response.json()["access_token"]
-#     # raise Exception("Failed to generate access token for M-PESA API")
-
-#     try:
-#         res = requests.get(access_token_url, auth=HTTPBasicAuth(consumer_key, consumer_secret))
-#         print(res)
-#     except Exception as err:
-#         logging.error("Error {}".format(err))
-#             #raise err
-#     else:
-#         token = res.json()["access_token"]
-#         return token
-    
-
-# def get_mpesa_password():
-#     """
-#     Generates the password required for the M-PESA API request.
-#     """
-#     # Get the timestamp
-#     timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
-#     plaintext = f"{settings.MPESA_BUSINESS_SHORTCODE}{settings.MPESA_PASSKEY}{timestamp}"
-
-#     password = hashlib.sha1(plaintext.encode()).hexdigest()
-#     return password
-
-
-# def get_mpesa_timestamp():
-#     """
-#     Generates the timestamp required for the M-PESA API request.
-#     """
-#     timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
-#     return timestamp
 
 
 @login_required
@@ -223,37 +173,9 @@ def checkout(request):
 
             # Create the Mpesa transaction
             response = cl.stk_push(phone_number=profile.phone_number, amount=int(total), callback_url=callback_url, account_reference=account_reference, transaction_desc=transaction_description)
-            # access_token = get_mpesa_access_token()
-            # url = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest"
-            # headers = {
-            #     "Authorization": f"Bearer {access_token}",
-            #     "Content-Type": "application/json"
-            # }
-            # payload = {
-            #     "BusinessShortCode": settings.MPESA_BUSINESS_SHORTCODE,
-            #     "Password": get_mpesa_password(),
-            #     "Timestamp": get_mpesa_timestamp(),
-            #     "TransactionType": "CustomerPayBillOnline",
-            #     "Amount": int(total),
-            #     "PartyA": str(profile.phone_number),
-            #     "PartyB": settings.MPESA_BUSINESS_SHORTCODE,
-            #     "PhoneNumber": str(profile.phone_number),
-            #     "CallBackURL": settings.BASE_URL,
-            #     "AccountReference": "Shopping Cart",
-            #     "TransactionDesc": "Shopping Cart Payment"
-            # }
-            # print(url)
-            # print(headers)
-
-            # response = requests.post(url, headers=headers, json=payload)
+            
             return HttpResponse(response)
-            # if response.status_code == 200:
-            #     # Redirect the user to the Mpesa payment page
-            #     checkout_request_id = response.json()["CheckoutRequestID"]
-            #     return redirect(f"https://sandbox.safaricom.co.ke/mpesa/stkpush?checkoutRequestID={checkout_request_id}&merchantID={settings.MPESA_BUSINESS_SHORTCODE}&phoneNumber={profile.phone_number}&amount={total}&mpesaPublicKey={settings.MPESA_PUBLIC_KEY}&mpesaSecret={settings.MPESA_SECRET_KEY}&callBackURL={settings.BASE_URL}/mpesa/callback")
-            # else:
-            #     messages.error(request, "Failed to initiate Mpesa payment.")
-            #     return redirect('cart_view')
+            
             
         else:
             errors = form.errors
